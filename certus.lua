@@ -102,6 +102,7 @@ while (true) do
         t=nil
         if(inv)then
             --todo: Refill code here
+            os.sleep(5)
         end
     end
 
