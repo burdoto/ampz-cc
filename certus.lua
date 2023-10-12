@@ -2,11 +2,10 @@ length=5
 width=5
 
 function sel(name)
-    i=0
+    i=1
     found=false
-    while(i<4*4)do
-        slot=turtle.getSelectedSlot()
-        turtle.select(slot)
+    while(i<=4*4)do
+        turtle.select(i)
         detail=turtle.getItemDetail()
         if((not(detail==nil)) and detail.name==name)then
             found=true
@@ -60,27 +59,22 @@ while (true) do
             y=y+dy
             if(y>=length)then
                 if(b)then
-                    print('turnLeft')
                     t=turtle.turnLeft
                     it=turtle.turnRight
                 else
-                    print('turnRight')
                     t=turtle.turnRight
                     it=turtle.turnLeft
                 end
             elseif(y<=0)then
                 if(b)then
-                    print('turnRight')
                     t=turtle.turnRight
                     it=turtle.turnLeft
                 else
-                    print('turnLeft')
                     t=turtle.turnLeft
                     it=turtle.turnRight
                 end
             end
             if(t==nil and ((dy>0 or y>0) and (dy<0 or y<length)))then
-                print('forward')
                 turtle.forward()
             end
         end
@@ -104,9 +98,11 @@ while (true) do
         if(not inv) then
             turtle.forward()
         end
-        print('turn for full rotation')
         ut()
         t=nil
+        if(inv)then
+            --todo: Refill code here
+        end
     end
 
     dx=dx*-1
