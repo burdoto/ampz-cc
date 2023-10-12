@@ -17,15 +17,15 @@ function sel(name)
     return found
 end
 
-x=0
-y=0
-
-dx=1
-dy=1
-
-b=false
-
 while (true) do
+    x=0
+    y=0
+
+    dx=1
+    dy=1
+
+    b=false
+
     print('(x,y), (dx,dy), (b,t))')
     while((dx>0 or x>=0) and (dx<0 or x<width)) do
         while((dy>0 or y>0) and (dy<0 or y<length)) do
@@ -62,17 +62,21 @@ while (true) do
                 if(b)then
                     print('turnLeft')
                     t=turtle.turnLeft
+                    it=turtle.turnRight
                 else
                     print('turnRight')
                     t=turtle.turnRight
+                    it=turtle.turnLeft
                 end
             elseif(y<=0)then
                 if(b)then
                     print('turnRight')
                     t=turtle.turnRight
+                    it=turtle.turnLeft
                 else
                     print('turnLeft')
                     t=turtle.turnLeft
+                    it=turtle.turnRight
                 end
             end
             if(t==nil and ((dy>0 or y>0) and (dy<0 or y<length)))then
@@ -86,13 +90,23 @@ while (true) do
             exit()
         end
 
-        dy=dy*-1
-        t()
-        turtle.forward()
-        print('turn for full rotation')
-        t()
-        t=nil
         x=x+dx
+        dy=dy*-1
+        if ((dx>0 or x>=0) and (dx<0 or x<width))then
+            ut=t
+            inv=false
+        else
+            ut=it
+            x=x+(dx*2)
+            inv=true
+        end
+        ut()
+        if(not inv) then
+            turtle.forward()
+        end
+        print('turn for full rotation')
+        ut()
+        t=nil
     end
 
     dx=dx*-1
