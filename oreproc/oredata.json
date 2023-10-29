@@ -1,0 +1,30 @@
+{
+  {
+    name = "Iron",
+    state = true,
+  },
+  {
+    name = "Copper",
+    state = false,
+  },
+  {
+    name = "Gold",
+    state = true,
+  },
+  {
+    name = "Tin",
+    state = false,
+  },
+  {
+    name = "Lead",
+    state = true,
+  },
+  {
+    name = "Osmium",
+    state = true,
+  },
+  {
+    name = "Uranium",
+    state = true,
+  },
+}
