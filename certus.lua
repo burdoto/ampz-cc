@@ -23,6 +23,7 @@ while (true) do
     dx=1
     dy=1
 
+    m=0
     b=false
 
     print('(x,y), (dx,dy), (b,t))')
@@ -32,10 +33,11 @@ while (true) do
 
             -- inspect crystal
             solid,obj=turtle.inspectDown()
-            if(solid) then
+            if(force or solid) then
                 -- mine crystal
                 if(obj.name=='ae2:quartz_cluster') then
                     turtle.digDown()
+                    m=m+1
                 end
             end
 
@@ -86,6 +88,11 @@ while (true) do
 
         x=x+dx
         dy=dy*-1
+        if (force) then
+            force=false
+        elseif (m==0) then
+            force=true
+        end
         if ((dx>0 or x>=0) and (dx<0 or x<width))then
             ut=t
             inv=false
