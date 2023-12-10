@@ -1,0 +1,3 @@
+mc_er_GeneratedEnergy = InductorEfficiency*TurbineEfficiency*(CoilSize*InductorDrag*RotorSpeed)^InductorBonus
+mc_er_TurbineEfficiency =
+mc_er_RotorSpeed = frac(RotorEnergy)(BladeSurfaceArea*RotorMass)
