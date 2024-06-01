@@ -10,13 +10,12 @@
  while true do
      -- calculate positions
      width, height = monitor.getSize();
-     lineRemaining = height * 0.4;
-     lineRemSpace = width * 0.142857143;
-     lineBtnAdd30 = height * 0.8;
-    lineBA30Space = width * 0.33;
+     lineRemaining = math.floor(height * 0.4);
+     lineRemSpace = math.floor(width * 0.142857143);
+     lineBtnAdd30 = math.floor(height * 0.8);
+     lineBA30Space = math.floor(width * 0.256);
     lineBtnCancel = height;
-    lineBtCclSpace = width * 0.142857143;
-    buttonHeight = height / 5;
+    lineBtCclSpace = math.floor(width * 0.33);
 
     -- print remaining time
     remMin = math.floor(timer / 60);
@@ -26,11 +25,11 @@
 
     -- print +time button
     monitor.setCursorPos(lineBA30Space + 1, lineBtnAdd30);
-    monitor.blit("+30s", "0000","5555");
+    monitor.blit("+5min", "00000","55555");
 
     -- print cancel button
     monitor.setCursorPos(lineBtCclSpace + 1, lineBtnCancel);
-    monitor.blit("Cancel", "000000","eeeeee");
+    monitor.blit("Stop", "0000","eeee");
 
     repeat event, id, x, y = os.pullEventRaw()
     -- debug print(event); if id ~= nil then print(id) end
@@ -42,18 +41,18 @@
     end
     timerId = os.startTimer(1);
     elseif (event == "monitor_touch") then
-    -- but         ract
-    print("touch["..x..","..y.."]")
-    print("add30["..lineBA30Space..","..lineBtnAdd30..","..(lineBtnAdd30 + 4).."]")
-    print("cancel["..lineBtCclSpace..","..lineBtnCancel..","..(lineBtCclSpace + 6).."]")
-    if y == lineButton and x > lineBA30Space and x <= (lineBtnAdd30 + 4) then
+    -- button interact
+    --print("touch["..x..","..y.."]")
+
+    if y == lineBtnAdd30 and x > lineBA30Space and x < (lineBtnAdd30 + 3) then
         -- +30sec button
-        timer = timer + 30;
-    elseif y == lineBtnCancel and x > lineBtCclSpace and x <= (lineBtCclSpace + 6) then
+        timer = timer + 300;
+    elseif y == lineBtnCancel and x > lineBtCclSpace and x < (lineBtCclSpace + 5) then
         -- cancel button
         timer = 0;
     end
 end
+--print(timer);
 result = timer > 0;
 if inverse then result = not result end
 redstone.setOutput(outputSide, result);
