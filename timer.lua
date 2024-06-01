@@ -10,10 +10,12 @@
  while true do
      -- calculate positions
      width, height = monitor.getSize();
-    lineRemaining = height * 0.4;
-    lineRemSpace = width * 0.142857143;
-    lineButton = height * 0.8;
-    lineBtnSpace = width * 0.2857;
+     lineRemaining = height * 0.4;
+     lineRemSpace = width * 0.142857143;
+     lineBtnAdd30 = height * 0.8;
+    lineBA30Space = width * 0.33;
+    lineBtnCancel = height;
+    lineBtCclSpace = width * 0.142857143;
     buttonHeight = height / 5;
 
     -- print remaining time
@@ -23,25 +25,36 @@
     monitor.write(string.format("%02d:%02d", remMin, remSec));
 
     -- print +time button
-    monitor.setCursorPos(lineBtnSpace + 1, lineButton);
-    monitor.blit("+30s", "0000","aaaa");
+    monitor.setCursorPos(lineBA30Space + 1, lineBtnAdd30);
+    monitor.blit("+30s", "0000","5555");
+
+    -- print cancel button
+    monitor.setCursorPos(lineBtCclSpace + 1, lineBtnCancel);
+    monitor.blit("Cancel", "000000","eeeeee");
 
     repeat event, id, x, y = os.pullEventRaw()
-        -- debug print(event); if id ~= nil then print(id) end
+    -- debug print(event); if id ~= nil then print(id) end
     until event == "timer" or event == "monitor_touch";
     if event == "timer" and id == timerId then
-        -- timer elapse
-        if timer > 0 then
-            timer = timer - 1;
-        end
-        timerId = os.startTimer(1);
-    elseif (event == "monitor_touch") then
-        -- button interact
-        if y == lineButton and x > lineBtnSpace and x < (lineBtnSpace + 4) then
-            timer = timer + 30;
-        end
+    -- timer elapse
+    if timer > 0 then
+        timer = timer - 1;
     end
-    result = timer > 0;
-    if inverse then result = not result end
-    redstone.setOutput(outputSide, result);
+    timerId = os.startTimer(1);
+    elseif (event == "monitor_touch") then
+    -- but         ract
+    print("touch["..x..","..y.."]")
+    print("add30["..lineBA30Space..","..lineBtnAdd30..","..(lineBtnAdd30 + 4).."]")
+    print("cancel["..lineBtCclSpace..","..lineBtnCancel..","..(lineBtCclSpace + 6).."]")
+    if y == lineButton and x > lineBA30Space and x <= (lineBtnAdd30 + 4) then
+        -- +30sec button
+        timer = timer + 30;
+    elseif y == lineBtnCancel and x > lineBtCclSpace and x <= (lineBtCclSpace + 6) then
+        -- cancel button
+        timer = 0;
+    end
+end
+result = timer > 0;
+if inverse then result = not result end
+redstone.setOutput(outputSide, result);
 end
